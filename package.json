@@ -1,1 +1,15 @@
+{
+  "name": "fiyr-academy",
+  "version": "1.0.0",
+  "description": "A knowledge-sharing platform for blogs and courses.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
 
