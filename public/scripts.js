@@ -1,41 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("FIYR Academy is live!");
+    console.log("FIYR Academy is live!");
+
+    // Fetch and display blogs
+    function fetchBlogs() {
+        fetch('/api/blogs') // Adjusted path for future backend support
+            .then(response => response.json())
+            .then(data => {
+                const blogsList = document.getElementById('blogs-list');
+                blogsList.innerHTML = '';
+                data.forEach(blog => {
+                    const blogItem = document.createElement('div');
+                    blogItem.className = 'blog-item';
+                    blogItem.innerHTML = `
+                        <h3>${blog.title}</h3>
+                        <p>${blog.content}</p>
+                    `;
+                    blogsList.appendChild(blogItem);
+                });
+            })
+            .catch(error => console.error('Error fetching blogs:', error));
+    }
+
+    // Fetch and display courses
+    function fetchCourses() {
+        fetch('/api/courses') // Adjusted path for future backend support
+            .then(response => response.json())
+            .then(data => {
+                const coursesList = document.getElementById('courses-list');
+                coursesList.innerHTML = '';
+                data.forEach(course => {
+                    const courseItem = document.createElement('div');
+                    courseItem.className = 'course-item';
+                    courseItem.innerHTML = `
+                        <h3>${course.title}</h3>
+                        <p>${course.description}</p>
+                    `;
+                    coursesList.appendChild(courseItem);
+                });
+            })
+            .catch(error => console.error('Error fetching courses:', error));
+    }
+
+    // Call fetch functions if respective elements are present
+    if (document.getElementById('blogs-list')) fetchBlogs();
+    if (document.getElementById('courses-list')) fetchCourses();
 });
-
-// Import Firebase functions
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBsioqqEHDnneX4ULeevST6mO1NYWxhh-I",
-  authDomain: "fiyr-academy.firebaseapp.com",
-  projectId: "fiyr-academy",
-  storageBucket: "fiyr-academy.appspot.com",
-  messagingSenderId: "1082192041153",
-  appId: "1:1082192041153:web:9de39c9799fc173e2f7040",
-  measurementId: "G-GQF03FYF45"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// Fetch Blogs
-async function fetchBlogs() {
-  const blogsCol = collection(db, "blogs");
-  const blogSnapshot = await getDocs(blogsCol);
-  const blogs = blogSnapshot.docs.map(doc => doc.data());
-  console.log("Blogs:", blogs);
-}
-
-// Fetch Courses
-async function fetchCourses() {
-  const coursesCol = collection(db, "courses");
-  const courseSnapshot = await getDocs(coursesCol);
-  const courses = courseSnapshot.docs.map(doc => doc.data());
-  console.log("Courses:", courses);
-}
-
-fetchBlogs();
-fetchCourses();
