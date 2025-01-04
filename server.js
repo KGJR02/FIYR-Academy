@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('your_mongodb_connection_string', {
+mongoose.connect('mongodb+srv://fiyracademy:<db_password>@fiyr-academy.ka5zp.mongodb.net/?retryWrites=true&w=majority&appName=FIYR-ACADEMY', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected!'))
