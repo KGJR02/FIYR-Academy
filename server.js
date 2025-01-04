@@ -1,10 +1,17 @@
-console.log('Server file is loaded');
-const express = require("express");
+const express = require('express');
+const path = require('path');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static("public")); // Serve static files
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Fallback to index.html for SPA routing
 app.get('*', (req, res) => {
-    res.send('Route not found or file structure issue');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
